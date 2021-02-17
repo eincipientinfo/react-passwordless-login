@@ -63,7 +63,7 @@ export const verifyOtp = ({ otp, phone }) => {
         {
           ...otpData,
           otp: otp,
-          number: phone,
+          username: phone,
         },
         headers
       )
@@ -72,5 +72,6 @@ export const verifyOtp = ({ otp, phone }) => {
       })
       .catch((error) => {
         console.log(error, "err");
+        dispatch({ type: actionTypes.VERIFY_OTP, payload: error });
       });
 };
