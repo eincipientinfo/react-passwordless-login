@@ -72,6 +72,5 @@ export const verifyOtp = ({ otp, phone }) => {
       })
       .catch((error) => {
         console.log(error, "err");
-        dispatch({ type: actionTypes.VERIFY_OTP, payload: error });
       });
 };
