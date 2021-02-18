@@ -30,17 +30,18 @@ export const login = (phone) => {
         headers
       )
       .then((res) => {
-        console.log(res, "res");
         dispatch({
           type: actionTypes.IS_OTP_SENT,
-          payload: { status: true, phone: phone },
+          payload: { status: true, phone: phone, msg: "", data: res?.data },
         });
       })
-      .catch((error) => {
-        console.log(error, "res");
+      .catch(() => {
         dispatch({
           type: actionTypes.IS_OTP_SENT,
-          payload: { status: true, phone: phone },
+          payload: {
+            status: false,
+            msg: "Not a registered or valid phone number!",
+          },
         });
       });
 };
@@ -68,9 +69,15 @@ export const verifyOtp = ({ otp, phone }) => {
         headers
       )
       .then((res) => {
-        dispatch({ type: actionTypes.VERIFY_OTP, payload: res });
+        dispatch({
+          type: actionTypes.VERIFY_OTP,
+          payload: { status: true, data: res?.data, msg: "" },
+        });
       })
-      .catch((error) => {
-        console.log(error, "err");
+      .catch(() => {
+        dispatch({
+          type: actionTypes.VERIFY_OTP,
+          payload: { status: false, msg: "Not a valid OTP" },
+        });
       });
 };

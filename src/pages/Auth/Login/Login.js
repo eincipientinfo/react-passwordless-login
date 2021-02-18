@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import LoginForm from "./LoginForm";
 import { connect } from "react-redux";
 import { login, verifyOtp } from "../../../store/auth/authActions";
-import { object, func, bool } from "prop-types";
+import { object, func, bool, string } from "prop-types";
 const styles = {
   root: {},
   container: {},
@@ -21,9 +21,13 @@ const styles = {
     fontWeight: 300,
     color: "rgba(0, 0, 0, 0.32)",
   },
+  error: {
+    fontWeight: 300,
+    color: "red",
+  },
 };
 
-const Login = ({ classes, loginUser, isotpSent, verify }) => {
+const Login = ({ classes, loginUser, isotpSent, verify, msg }) => {
   const [phone, setPhone] = useState("");
   const [otp, setOtp] = useState("");
 
@@ -80,6 +84,7 @@ const Login = ({ classes, loginUser, isotpSent, verify }) => {
                 button={null}
               />
             )}
+            {msg && <h4 className={classes.error}>{msg}</h4>}
           </Grid>
         </Grid>
       </Grid>
@@ -92,10 +97,12 @@ Login.propTypes = {
   loginUser: func.isRequired,
   isotpSent: bool.isRequired,
   verify: func.isRequired,
+  msg: string.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   isotpSent: state.auth?.isOtpSent,
+  msg: state.auth?.msg,
 });
 
 const mapDispatchToProps = (dispatch) => ({

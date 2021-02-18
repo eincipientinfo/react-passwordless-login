@@ -4,6 +4,8 @@ const initialState = {
   isOtpSent: false,
   isOtpVerified: false,
   phone: "",
+  msg: "",
+  authData: {},
 };
 
 const reducer = (state = initialState, action) => {
@@ -12,10 +14,15 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         isOtpSent: action.payload?.status,
-        phone: action.payload?.status,
+        msg: action.payload?.msg,
       };
     case actionTypes.VERIFY_OTP:
-      return { ...state, isOtpVerified: action.payload };
+      return {
+        ...state,
+        isOtpVerified: action.payload?.status,
+        msg: action.payload?.msg,
+        authData: action.payload?.data,
+      };
     default:
       return { ...state };
   }
